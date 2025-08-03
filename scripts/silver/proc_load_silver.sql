@@ -78,9 +78,8 @@ BEGIN
 		PRINT'Inserting Data into: silver.crm_prd_info';
 		INSERT INTO silver.crm_prd_info(
 		prd_id,
-		prd_key,
 		cat_id,
-		prd_key2,
+		prd_key,
 		prd_nm,
 		prd_cost,
 		prd_line,
@@ -89,9 +88,8 @@ BEGIN
 		)
 		SELECT 
 		prd_id,
-		prd_key,
 		REPLACE(SUBSTRING(prd_key,1,5),'-', '_') AS cat_id,-- 1st Transformation- Splitting the column prd_key to cat_id and prd_key2 for joining with other tables
-		SUBSTRING(prd_key, 7, len(prd_key)) AS prd_key2,
+		SUBSTRING(prd_key, 7, len(prd_key)) AS prd_key,
 		prd_nm,
 		COALESCE(prd_cost,0) AS prd_cost,--2nd transformation- Handling nulls and check for negative costs
 		CASE UPPER(TRIM(prd_line))-- 3rd Transformation- writing full forms for M, R, S, T
